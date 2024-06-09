@@ -1,5 +1,5 @@
 {
-  "name": "nextjs-admin-dashboard",
+  "name": "nextjs-admin",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -25,7 +25,6 @@
     "zustand": "^4.5.2"
   },
   "devDependencies": {
-    "@tanstack/eslint-plugin-query": "^5.35.6",
     "eslint": "^8",
     "eslint-config-next": "14.2.3"
   }

@@ -24,9 +24,8 @@ bun dev
 - [Emotion for material UI 5](https://emotion.sh/)
 - Material UI Icons
 - Roboto Font for material UI 5
-- Google Web Fonts
 - [Zustand](https://docs.pmnd.rs/zustand/getting-started/introduction)
-- [React Query](https://tanstack.com/query/v3/docs/framework/react/overview)
+- [React Query](https://tanstack.com/query/latest/docs/framework/react/overview)
 - [React hook form](https://react-hook-form.com/get-started)
 - [Yup](https://github.com/jquense/yup)
 
