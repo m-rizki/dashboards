@@ -1,58 +1,195 @@
 import { useState } from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
 
-export default function Login() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const { data: session } = useSession();
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+// import FormControlLabel from "@mui/material/FormControlLabel";
+// import Checkbox from "@mui/material/Checkbox";
+import Link from "@mui/material/Link";
+// import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import { useForm, Controller } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+function Copyright(props) {
+  return (
+    <Typography
+      variant="body2"
+      color="text.secondary"
+      align="center"
+      {...props}
+    >
+      {"Copyright © "}
+      <Link color="inherit" href="#">
+        Your Website
+      </Link>{" "}
+      {new Date().getFullYear()}
+      {"."}
+    </Typography>
+  );
+}
+
+const schema = yup.object().shape({
+  username: yup.string().required("Username is Required"),
+  password: yup
+    .string()
+    .min(6, "Password must be at least 6 characters")
+    .required("Password is required"),
+});
+
+export default function LoginPage() {
+  const { data: session } = useSession();
+  const [loading, setLoading] = useState(false);
+  const [formError, setFormError] = useState("");
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
+
+  const onSubmit = async (data) => {
+    setLoading(true);
     const result = await signIn("credentials", {
-      username,
-      password,
-      redirect: true,
-      callbackUrl: "/",
+      username: data.username,
+      password: data.password,
+      redirect: false,
     });
+
     if (result.error) {
-      console.error("Failed to login", result.error);
+      setFormError(result.error);
     } else {
-      console.log("Logged in successfully");
+      setFormError("");
     }
+    setLoading(false);
   };
 
   if (session) {
     return (
-      <div>
-        <h1>Welcome, {session.user.firstName}</h1>
-        <button onClick={() => signOut()}>Sign out</button>
-      </div>
+      <Container component="section" maxWidth="xs">
+        <Box
+          sx={{
+            marginTop: 8,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <h1>Welcome, {session.user.firstName}</h1>
+          <Button
+            variant="outlined"
+            color="secondary"
+            onClick={() => signOut()}
+          >
+            Sign out
+          </Button>
+        </Box>
+      </Container>
     );
   }
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Username:
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+    <Container component="section" maxWidth="xs">
+      <Box
+        sx={{
+          marginTop: 8,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+          <LockOutlinedIcon />
+        </Avatar>
+        <Typography component="h1" variant="h5">
+          Sign in
+        </Typography>
+        <Box
+          component="form"
+          onSubmit={handleSubmit(onSubmit)}
+          noValidate
+          sx={{ mt: 1 }}
+        >
+          <Controller
+            name="username"
+            control={control}
+            disabled={loading}
+            defaultValue=""
+            render={({ field }) => (
+              <TextField
+                {...field}
+                margin="normal"
+                required
+                fullWidth
+                id="username"
+                label="Username"
+                autoComplete="username"
+                autoFocus
+                error={!!errors.username}
+                helperText={errors.username ? errors.username.message : ""}
+              />
+            )}
           />
-        </label>
-        <br />
-        <label>
-          Password:
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+          <Controller
+            name="password"
+            control={control}
+            defaultValue=""
+            disabled={loading}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+                error={!!errors.password}
+                helperText={errors.password ? errors.password.message : ""}
+              />
+            )}
           />
-        </label>
-        <br />
-        <button type="submit">Login</button>
-      </form>
-    </div>
+          {formError && (
+            <Typography color="error" variant="body2">
+              {formError}
+            </Typography>
+          )}
+          {/* <FormControlLabel
+            control={<Checkbox value="remember" color="primary" />}
+            label="Remember me"
+          /> */}
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+            disabled={loading}
+          >
+            {loading ? `Sign In...` : `Sign In`}
+          </Button>
+          {/* <Grid container>
+            <Grid item xs>
+              <Link href="#" variant="body2">
+                Forgot password?
+              </Link>
+            </Grid>
+            <Grid item>
+              <Link href="#" variant="body2">
+                {"Don't have an account? Sign Up"}
+              </Link>
+            </Grid>
+          </Grid> */}
+        </Box>
+      </Box>
+      <Copyright sx={{ mt: 8, mb: 4 }} />
+    </Container>
   );
 }

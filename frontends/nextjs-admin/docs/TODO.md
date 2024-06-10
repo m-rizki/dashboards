@@ -8,6 +8,6 @@ pnpm add @emotion/cache
 ```
 
 - [x] Add Appbar & appbar menu on Homepage
-- [ ] Setup routing
-- [ ] Setup react-hook-form for login page
-- [ ] Finishing Basic Login & Logout handler (next auth jwt external API)
+- [x] Setup react-hook-form for login page
+- [ ] Setup routing dashboard (protected page)
+- [ ] Setup simple data loading with react query

@@ -25,9 +25,9 @@ bun dev
 - Material UI Icons
 - Roboto Font for material UI 5
 - [Zustand](https://docs.pmnd.rs/zustand/getting-started/introduction)
-- [React Query](https://tanstack.com/query/latest/docs/framework/react/overview)
 - [React hook form](https://react-hook-form.com/get-started)
 - [Yup](https://github.com/jquense/yup)
+- [React Query](https://tanstack.com/query/latest/docs/framework/react/overview)
 
 ### Framework
 

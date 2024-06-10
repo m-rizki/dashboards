@@ -1,9 +1,15 @@
-import { signIn } from "next-auth/react";
 import Head from "next/head";
-import Slider from "@mui/material/Slider";
-import Box from "@mui/material/Box";
 import CAppBar from "@/components/site/CAppBar";
-import Hero from "@/components/site/CHero";
+
+// import Slider from "@mui/material/Slider";
+// import { styled } from "@mui/material/styles";
+
+// const CustomSlider = styled(Slider)(({ theme }) => ({
+//   color: "blueviolet",
+//   "&:hover": {
+//     color: "yellowgreen",
+//   },
+// }));
 
 export default function Home() {
   return (

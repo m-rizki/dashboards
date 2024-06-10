@@ -12,22 +12,34 @@ export default NextAuth({
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials, req) {
-        // Add logic here to look up the user from the credentials supplied
-        const res = await fetch(AUTH_URLS.LOGIN.endpoint, {
-          method: AUTH_URLS.LOGIN.method,
-          body: JSON.stringify({
-            ...credentials,
-            expiresInMins: 60, // optional, defaults to 60
-          }),
-          headers: { "Content-Type": "application/json" },
-        });
-        const user = await res.json();
-        // If no error and we have user data, return it
-        if (res.ok && user) {
+        try {
+          const res = await fetch(AUTH_URLS.LOGIN.endpoint, {
+            method: AUTH_URLS.LOGIN.method,
+            body: JSON.stringify({
+              ...credentials,
+              expiresInMins: 60,
+            }),
+            headers: { "Content-Type": "application/json" },
+          });
+
+          if (!res.ok) {
+            // Optionally, you can throw an error with a custom message
+            throw new Error(`Login failed: ${res.status} ${res.statusText}`);
+          }
+
+          const user = await res.json();
+
+          if (!user) {
+            throw new Error("No user data returned");
+          }
+
           return user;
+        } catch (error) {
+          console.error("Error in authorize:", error);
+          throw new Error(
+            "Login failed. Please check your credentials and try again."
+          );
         }
-        // Return null if user data could not be retrieved
-        return null;
       },
     }),
   ],
