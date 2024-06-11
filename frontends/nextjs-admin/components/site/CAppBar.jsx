@@ -13,8 +13,10 @@ import {
   Typography,
 } from "@mui/material";
 import { signIn } from "next-auth/react";
+import { useRouter } from "next/router";
 
 export default function CAppBar() {
+  const router = useRouter();
   const [open, setOpen] = useState(false);
 
   const toggleDrawer = (newOpen) => () => {
@@ -74,7 +76,10 @@ export default function CAppBar() {
                   Home
                 </Typography>
               </MenuItem>
-              <MenuItem sx={{ py: "6px", px: "12px" }}>
+              <MenuItem
+                sx={{ py: "6px", px: "12px" }}
+                onClick={() => router.push("/dashboard")}
+              >
                 <Typography variant="body2" color="text.primary">
                   Dashboard
                 </Typography>
