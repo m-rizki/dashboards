@@ -4,10 +4,7 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-// import FormControlLabel from "@mui/material/FormControlLabel";
-// import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
-// import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
@@ -15,6 +12,7 @@ import Container from "@mui/material/Container";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { signinsx_container } from "@/styles/pages/auth/signin-style";
 
 function Copyright(props) {
   return (
@@ -73,14 +71,7 @@ export default function LoginPage() {
   if (session) {
     return (
       <Container component="section" maxWidth="xs">
-        <Box
-          sx={{
-            marginTop: 8,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
+        <Box sx={signinsx_container}>
           <h1>Welcome, {session.user.firstName}</h1>
           <Button
             variant="outlined"
@@ -89,6 +80,13 @@ export default function LoginPage() {
           >
             Sign out
           </Button>
+          <Button
+            variant="outlined"
+            color="secondary"
+            onClick={() => signOut()}
+          >
+            Dashboard
+          </Button>
         </Box>
       </Container>
     );
@@ -96,14 +94,7 @@ export default function LoginPage() {
 
   return (
     <Container component="section" maxWidth="xs">
-      <Box
-        sx={{
-          marginTop: 8,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
+      <Box sx={signinsx_container}>
         <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
           <LockOutlinedIcon />
         </Avatar>
@@ -162,10 +153,6 @@ export default function LoginPage() {
               {formError}
             </Typography>
           )}
-          {/* <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          /> */}
           <Button
             type="submit"
             fullWidth
@@ -175,18 +162,6 @@ export default function LoginPage() {
           >
             {loading ? `Sign In...` : `Sign In`}
           </Button>
-          {/* <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid>
-            <Grid item>
-              <Link href="#" variant="body2">
-                {"Don't have an account? Sign Up"}
-              </Link>
-            </Grid>
-          </Grid> */}
         </Box>
       </Box>
       <Copyright sx={{ mt: 8, mb: 4 }} />
