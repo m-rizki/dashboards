@@ -12,53 +12,33 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
-import { signIn } from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
+import {
+  appbarsx_desktop_left_container,
+  appbarsx_container,
+  appbarsx_toolbar,
+  appbarsx_desktop_menu_item,
+  appbarsx_desktop_right_container,
+  appbarsx_mobile_container,
+  appbarsx_mobile_drawer_container,
+} from "@/styles/components/site/app-bar-style";
 
 export default function CAppBar() {
   const router = useRouter();
   const [open, setOpen] = useState(false);
+  const { data: session } = useSession();
 
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
   };
 
   return (
-    <AppBar
-      position="fixed"
-      sx={{
-        boxShadow: 0,
-        bgcolor: "transparent",
-        backgroundImage: "none",
-        mt: 2,
-      }}
-    >
+    <AppBar position="fixed" sx={appbarsx_container}>
       <Container maxWidth="lg">
-        <Toolbar
-          variant="regular"
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            flexShrink: 0,
-            borderRadius: "999px",
-            bgcolor: "rgba(255, 255, 255, 0.4)",
-            backdropFilter: "blur(24px)",
-            maxHeight: 40,
-            border: "1px solid",
-            borderColor: "divider",
-            boxShadow: `0 0 1px rgba(85, 166, 246, 0.1), 1px 1.5px 2px -1px rgba(85, 166, 246, 0.15), 4px 4px 12px -2.5px rgba(85, 166, 246, 0.15)`,
-          }}
-        >
-          <Box
-            sx={{
-              flexGrow: 1,
-              display: "flex",
-              alignItems: "center",
-              ml: "-18px",
-              px: 0,
-            }}
-          >
+        <Toolbar variant="regular" sx={appbarsx_toolbar}>
+          {/* Desktop Menu */}
+          <Box sx={appbarsx_desktop_left_container}>
             <img
               src="/logo-placeholder-image.png"
               style={{
@@ -66,49 +46,56 @@ export default function CAppBar() {
                 height: "auto",
                 cursor: "pointer",
               }}
-              alt="logo of sitemark"
+              alt="logo"
             />
-            {/* Desktop Menu */}
             <Box sx={{ display: { xs: "none", md: "flex" } }}>
-              {/* as link */}
-              <MenuItem sx={{ py: "6px", px: "12px" }}>
+              <MenuItem sx={appbarsx_desktop_menu_item}>
                 <Typography variant="body2" color="text.primary">
                   Home
                 </Typography>
               </MenuItem>
               <MenuItem
-                sx={{ py: "6px", px: "12px" }}
+                sx={appbarsx_desktop_menu_item}
                 onClick={() => router.push("/dashboard")}
               >
                 <Typography variant="body2" color="text.primary">
                   Dashboard
                 </Typography>
               </MenuItem>
-              <MenuItem sx={{ py: "6px", px: "12px" }}>
+              <MenuItem sx={appbarsx_desktop_menu_item}>
                 <Typography variant="body2" color="text.primary">
                   FAQ
                 </Typography>
               </MenuItem>
             </Box>
           </Box>
-          <Box
-            sx={{
-              display: { xs: "none", md: "flex" },
-              gap: 0.5,
-              alignItems: "center",
-            }}
-          >
-            <Button
-              color="primary"
-              variant="text"
-              size="small"
-              component="a"
-              onClick={() => signIn()}
-            >
-              Sign in
-            </Button>
+
+          <Box sx={appbarsx_desktop_right_container}>
+            {session ? (
+              <Button
+                color="secondary"
+                variant="text"
+                size="small"
+                component="a"
+                onClick={() => signOut()}
+              >
+                Sign out
+              </Button>
+            ) : (
+              <Button
+                color="primary"
+                variant="contained"
+                size="small"
+                component="a"
+                onClick={() => signIn()}
+              >
+                Sign in
+              </Button>
+            )}
           </Box>
-          <Box sx={{ display: { sm: "", md: "none" } }}>
+
+          {/* Mobile */}
+          <Box sx={appbarsx_mobile_container}>
             <Button
               variant="text"
               color="primary"
@@ -119,30 +106,36 @@ export default function CAppBar() {
               <Menu />
             </Button>
             <Drawer anchor="right" open={open} onClose={toggleDrawer(false)}>
-              <Box
-                sx={{
-                  minWidth: "60dvw",
-                  p: 2,
-                  backgroundColor: "background.paper",
-                  flexGrow: 1,
-                }}
-              >
+              <Box sx={appbarsx_mobile_drawer_container}>
                 <MenuItem>Features</MenuItem>
                 <MenuItem>Testimonials</MenuItem>
                 <MenuItem>Highlights</MenuItem>
                 <MenuItem>Pricing</MenuItem>
                 <MenuItem>FAQ</MenuItem>
                 <Divider />
-                <MenuItem onClick={() => signIn()}>
-                  <Button
-                    color="primary"
-                    variant="outlined"
-                    component="a"
-                    sx={{ width: "100%" }}
-                  >
-                    Sign in
-                  </Button>
-                </MenuItem>
+                {session ? (
+                  <MenuItem onClick={() => signOut()}>
+                    <Button
+                      color="secondary"
+                      variant="outlined"
+                      component="a"
+                      sx={{ width: "100%" }}
+                    >
+                      Sign out
+                    </Button>
+                  </MenuItem>
+                ) : (
+                  <MenuItem onClick={() => signIn()}>
+                    <Button
+                      color="primary"
+                      variant="outlined"
+                      component="a"
+                      sx={{ width: "100%" }}
+                    >
+                      Sign in
+                    </Button>
+                  </MenuItem>
+                )}
               </Box>
             </Drawer>
           </Box>
