@@ -4,7 +4,7 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import Link from "@mui/material/Link";
+import MuiLink from "@mui/material/Link";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
@@ -12,7 +12,11 @@ import Container from "@mui/material/Container";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { signinsx_container } from "@/styles/pages/auth/signin-style";
+import {
+  signinsx_actions_container,
+  signinsx_container,
+} from "@/styles/pages/auth/signin-style";
+import { useRouter } from "next/router";
 
 function Copyright(props) {
   return (
@@ -23,9 +27,9 @@ function Copyright(props) {
       {...props}
     >
       {"Copyright © "}
-      <Link color="inherit" href="#">
+      <MuiLink color="inherit" href="#">
         Your Website
-      </Link>{" "}
+      </MuiLink>{" "}
       {new Date().getFullYear()}
       {"."}
     </Typography>
@@ -41,6 +45,7 @@ const schema = yup.object().shape({
 });
 
 export default function LoginPage() {
+  const router = useRouter();
   const { data: session } = useSession();
   const [loading, setLoading] = useState(false);
   const [formError, setFormError] = useState("");
@@ -73,20 +78,22 @@ export default function LoginPage() {
       <Container component="section" maxWidth="xs">
         <Box sx={signinsx_container}>
           <h1>Welcome, {session.user.firstName}</h1>
-          <Button
-            variant="outlined"
-            color="secondary"
-            onClick={() => signOut()}
-          >
-            Sign out
-          </Button>
-          <Button
-            variant="outlined"
-            color="secondary"
-            onClick={() => signOut()}
-          >
-            Dashboard
-          </Button>
+          <Box sx={signinsx_actions_container}>
+            <Button
+              variant="outlined"
+              color="secondary"
+              onClick={() => signOut()}
+            >
+              Sign out
+            </Button>
+            <Button
+              variant="outlined"
+              color="secondary"
+              onClick={() => router.push("/dashboard")}
+            >
+              Dashboard
+            </Button>
+          </Box>
         </Box>
       </Container>
     );
