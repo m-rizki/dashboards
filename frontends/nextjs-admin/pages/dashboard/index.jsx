@@ -1,5 +1,10 @@
+import CDashboardLayout from "@/components/dashboard/CDashboardLayout";
 import React from "react";
 
 export default function DashboardPage() {
-  return <div>DashboardPage, protected page</div>;
+  return (
+    <CDashboardLayout>
+      <h1>Dashboard Page</h1>
+    </CDashboardLayout>
+  );
 }
