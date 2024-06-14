@@ -18,6 +18,8 @@ import {
 import MenuIcon from "@mui/icons-material/Menu";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import { useRouter } from "next/router";
+import CDashboardMainListItem from "./CDashboardMainListItem";
 
 function Copyright(props) {
   return (
@@ -84,6 +86,7 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 export default function CDashboardLayout({ children }) {
+  const router = useRouter();
   const [open, setOpen] = useState(true);
   const toggleDrawer = () => {
     setOpen((prev) => !prev);
@@ -135,6 +138,7 @@ export default function CDashboardLayout({ children }) {
               cursor: "pointer",
             }}
             alt="logo"
+            onClick={() => router.push("/")}
           />
           <IconButton onClick={toggleDrawer}>
             <ChevronLeftIcon />
@@ -142,7 +146,7 @@ export default function CDashboardLayout({ children }) {
         </Toolbar>
         <Divider />
         <List component="nav">
-          {/* {mainListItems} */}
+          <CDashboardMainListItem />
           {/* <Divider sx={{ my: 1 }} /> */}
           {/* {secondaryListItems} */}
         </List>
