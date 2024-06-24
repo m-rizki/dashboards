@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
 
 import Avatar from "@mui/material/Avatar";
@@ -57,9 +57,13 @@ export default function LoginPage() {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = async (data) => {
+  interface FormData {
+    username: string;
+    password: string;
+  }
+  const onSubmit = async (data: FormData) => {
     setLoading(true);
-    const result = await signIn("credentials", {
+    const result: any = await signIn("credentials", {
       username: data.username,
       password: data.password,
       redirect: false,
@@ -72,6 +76,10 @@ export default function LoginPage() {
     }
     setLoading(false);
   };
+
+  useEffect(() => {
+    console.log(session);
+  }, [session]);
 
   if (session) {
     return (
