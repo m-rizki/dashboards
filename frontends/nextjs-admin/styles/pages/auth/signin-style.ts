@@ -1,7 +1,6 @@
-/**
- * @type {import('@mui/material').SxProps}
- */
-export const signinsx_container = {
+import { SxProps } from "@mui/material";
+
+export const signinsx_container: SxProps = {
   marginTop: 8,
   display: "flex",
   gap: "1rem",
@@ -9,7 +8,7 @@ export const signinsx_container = {
   alignItems: "center",
 };
 
-export const signinsx_actions_container = {
+export const signinsx_actions_container: SxProps = {
   display: "flex",
   gap: "1rem",
 };

@@ -11,7 +11,7 @@ for styling variable name use SxProps from material ui
 wrapper - element that surrounds all content on a web page
 container: A container is typically used to group specific content within a web page
 
-styles/site/app-bar-style.js
+styles/site/app-bar-style.js -> using js
 
 ```js
 /**
@@ -24,6 +24,18 @@ export const appbarsx_desktop_left_container = {
   alignItems: "center",
   ml: "-18px",
   px: 0,
+};
+```
+
+```ts
+import { SxProps } from "@mui/material";
+
+export const signinsx_container: SxProps = {
+  marginTop: 8,
+  display: "flex",
+  gap: "1rem",
+  flexDirection: "column",
+  alignItems: "center",
 };
 ```
 

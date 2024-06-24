@@ -29,7 +29,7 @@ export default function CAppBar() {
   const [open, setOpen] = useState(false);
   const { data: session } = useSession();
 
-  const toggleDrawer = (newOpen) => () => {
+  const toggleDrawer = (newOpen: boolean) => () => {
     setOpen(newOpen);
   };
 
