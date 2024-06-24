@@ -18,7 +18,7 @@ import {
 } from "@/styles/pages/auth/signin-style";
 import { useRouter } from "next/router";
 
-function Copyright(props) {
+function Copyright(props: any) {
   return (
     <Typography
       variant="body2"

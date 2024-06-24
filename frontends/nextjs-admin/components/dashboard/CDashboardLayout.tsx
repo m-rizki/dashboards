@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { ReactNode, useState } from "react";
 import Link from "next/link";
 
 import { styled } from "@mui/material/styles";
-import MuiAppBar from "@mui/material/AppBar";
+import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import MuiDrawer from "@mui/material/Drawer";
 import {
   Badge,
@@ -21,7 +21,7 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import { useRouter } from "next/router";
 import CDashboardMainListItem from "./CDashboardMainListItem";
 
-function Copyright(props) {
+function Copyright(props: any) {
   return (
     <Typography
       variant="body2"
@@ -41,9 +41,13 @@ function Copyright(props) {
 
 const drawerWidth = 240;
 
+interface AppBarProps extends MuiAppBarProps {
+  open?: boolean;
+}
+
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open",
-})(({ theme, open }) => ({
+})<AppBarProps>(({ theme, open }) => ({
   zIndex: theme.zIndex.drawer + 1,
   transition: theme.transitions.create(["width", "margin"], {
     easing: theme.transitions.easing.sharp,
@@ -85,7 +89,11 @@ const Drawer = styled(MuiDrawer, {
   },
 }));
 
-export default function CDashboardLayout({ children }) {
+interface CDashboardLayoutProps {
+  children: ReactNode;
+}
+
+export default function CDashboardLayout({ children }: CDashboardLayoutProps) {
   const router = useRouter();
   const [open, setOpen] = useState(true);
   const toggleDrawer = () => {

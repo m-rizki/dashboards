@@ -18,12 +18,10 @@ bun dev
 
 ## Stack
 
+- Typescript
 - Nextjs Page router
 - Next Auth
 - [Material UI 5](https://mui.com/material-ui/getting-started/installation/)
-- [Emotion for material UI 5](https://emotion.sh/)
-- Material UI Icons
-- Roboto Font for material UI 5
 - [Zustand](https://docs.pmnd.rs/zustand/getting-started/introduction)
 - [React hook form](https://react-hook-form.com/get-started)
 - [Yup](https://github.com/jquense/yup)
@@ -58,10 +56,10 @@ pnpm add @mui/icons-material
 
 ```bash
 # https://docs.pmnd.rs/zustand/getting-started/introduction
-pnpm add install zustand
+pnpm add zustand
 
-# https://tanstack.com/query/v3/docs/framework/react/overview
-pnpm add react-query
+# https://tanstack.com/query/latest/docs/framework/react/installation
+pnpm add @tanstack/react-query
 ```
 
 ### Forms
