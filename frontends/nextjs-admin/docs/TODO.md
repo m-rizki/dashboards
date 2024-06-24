@@ -9,7 +9,6 @@
 - [x] Add typescript
 - [x] Change code-style to typescript
 - [x] Setup prettier code formatter (minimal setup)
-- [ ] Setup ESlint & prettier import formatting
 - [ ] Setup simple data loading with react query for 1 page
 - [ ] Setup next auth with refresh token scenario for data fetching / mutating
 - [ ] Add All route page based on feature from [DummyJSON](https://dummyjson.com/docs/)
