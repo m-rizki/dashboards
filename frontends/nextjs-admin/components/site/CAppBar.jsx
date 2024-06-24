@@ -47,24 +47,15 @@ export default function CAppBar() {
                 cursor: "pointer",
               }}
               alt="logo"
+              onClick={() => router.push("/")}
             />
             <Box sx={{ display: { xs: "none", md: "flex" } }}>
-              <MenuItem sx={appbarsx_desktop_menu_item}>
-                <Typography variant="body2" color="text.primary">
-                  Home
-                </Typography>
-              </MenuItem>
               <MenuItem
                 sx={appbarsx_desktop_menu_item}
                 onClick={() => router.push("/dashboard")}
               >
                 <Typography variant="body2" color="text.primary">
                   Dashboard
-                </Typography>
-              </MenuItem>
-              <MenuItem sx={appbarsx_desktop_menu_item}>
-                <Typography variant="body2" color="text.primary">
-                  FAQ
                 </Typography>
               </MenuItem>
             </Box>
@@ -107,11 +98,9 @@ export default function CAppBar() {
             </Button>
             <Drawer anchor="right" open={open} onClose={toggleDrawer(false)}>
               <Box sx={appbarsx_mobile_drawer_container}>
-                <MenuItem>Features</MenuItem>
-                <MenuItem>Testimonials</MenuItem>
-                <MenuItem>Highlights</MenuItem>
-                <MenuItem>Pricing</MenuItem>
-                <MenuItem>FAQ</MenuItem>
+                <MenuItem onClick={() => router.push("/dashboard")}>
+                  Dashboard
+                </MenuItem>
                 <Divider />
                 {session ? (
                   <MenuItem onClick={() => signOut()}>
